@@ -11,7 +11,7 @@ class FloorRequestLogger implements Runnable {
     /**
      * 
      */
-    private final LinkedBlockingQueue<Signal> signals;
+    private final LinkedBlockingQueue<FloorRequestSignal> signals;
 
     /**
      * @param elevatorController
@@ -19,11 +19,14 @@ class FloorRequestLogger implements Runnable {
     FloorRequestLogger(ElevatorController elevatorController) {
         this.elevatorController = elevatorController;
 
-        this.signals = new LinkedBlockingQueue<Signal>();
+        this.signals = new LinkedBlockingQueue<FloorRequestSignal>();
     }
 
-    public void sendSignal(int cabID, int floorNumber, ISignalResponse response) {
-        signals.add(new Signal(cabID, floorNumber, response));
+    /**
+     * 
+     */
+    public void sendSignal(int cabID, int floorNumber, FloorRequestSignal.Response response) {
+        signals.add(new FloorRequestSignal(cabID, floorNumber, response));
     }
 
     @Override
@@ -31,7 +34,7 @@ class FloorRequestLogger implements Runnable {
         try {
             while (true) {
                 // get signal from queue
-                Signal signal = this.signals.take();
+                FloorRequestSignal signal = this.signals.take();
 
                 // process the signal
                 signal.process();
@@ -41,52 +44,7 @@ class FloorRequestLogger implements Runnable {
             e.printStackTrace();
         }
     }
-
-    interface ISignalResponse {
-        void onComplete();
-    }    
-
-    protected class Signal {
-        /**
-         * 
-         */
-        private final int cabID;
-
-        /**
-         * 
-         */
-        private final int floorNumber;
-
-        /**
-         * 
-         */
-        private final ISignalResponse response;
-
-        protected Signal(int cabID, int floorNumber, ISignalResponse response) {
-            this.cabID = cabID;
-            
-            this.floorNumber = floorNumber;
-
-            this.response = response;
-        }
-
-        protected void process () {
-            // if (this.elevatorController.cabController.cabs[cabID].cabNavigator.floorNumber == floorNumber) {
-            //     // Send a signal to the cab’s door opening device to
-            //     // open the doors 
-            // }
-            // else {
-            //     this.elevatorController.cabController.cabs[cabID].floorRequestButton[floorNumber].turnLightOn();
-            //     requests.add(this.elevatorController.new FloorRequest(cabID, floorNumber));
     
-            //     // Add floor request to queue
-            //     requests.drainTo(this.elevatorController.queue);
-            // }
-    
-            response.onComplete();
-        }
-    }
-
     public class FloorRequest extends ElevatorController.Request {
         int cabID;
         int floorNumber;

@@ -13,6 +13,10 @@ public class AppTest {
      */
     @Test
     public void testApp() {
+        ElevatorController
+            .getInstance()
+            .run();
+
         assertTrue(true);
     }
 }

@@ -1,7 +1,5 @@
 package id.ac.polban.jtk;
 
-import id.ac.polban.jtk.FloorRequestLogger.ISignalResponse;
-
 public class FloorRequestButton {
     void turnLightOn() {
 

@@ -7,8 +7,8 @@ class CabController {
     private final ElevatorController elevatorController;
 
     Cab[] cabs;
-    Thread[] cabProcess;
-    RequestProcessor[] cabRequest;
+    RequestProcessor[] cabsRequest;
+    Thread[] cabsThread;
 
     public CabController (ElevatorController elevatorController) {
         this.elevatorController = elevatorController;
@@ -18,14 +18,17 @@ class CabController {
         this.cabs[0] = new Cab();
         this.cabs[1] = new Cab();
 
-        this.cabProcess = new Thread[2];
-        this.cabRequest = new RequestProcessor[2];
+        this.cabsRequest = new RequestProcessor[2];
+        this.cabsThread  = new Thread[2];
     }
 
 
     void ProcessRequest(final int cabID, final int floorNumber) {
-        cabProcess[cabID] = new Thread(this.cabRequest[cabID]);
-        cabProcess[cabID].start();
+        cabsRequest[cabID] = new RequestProcessor(cabID, floorNumber);
+        
+        this.cabsThread[cabID] = new Thread(cabsRequest[cabID]);
+
+        this.cabsThread[cabID].start();
     }
 
     class RequestProcessor implements Runnable {
@@ -39,7 +42,12 @@ class CabController {
 
         @Override
         public void run() {
-//            cabs[cabID].cabNavigator.MoveToFloor(this.floorNumber);
+            cabs[cabID]
+                .getCabNavigator()
+                .moveTo(floorNumber);
+
+            // reset the request
+            cabsRequest[this.cabID] = null;
         }
     }
 }

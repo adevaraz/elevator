@@ -1,8 +1,14 @@
 package id.ac.polban.jtk;
 
 class Cab {
+    /**
+     * 
+     */
     private final FloorRequestButton[] floorRequestButton;
 
+    /**
+     * 
+     */
     private final CabNavigator cabNavigator;
 
     public Cab () {
