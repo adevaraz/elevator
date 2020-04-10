@@ -1,3 +1,7 @@
+/**
+ * Contributor:
+ * - Raefaldhi Amartya Junior (181524026)
+ */
 package id.ac.polban.jtk;
 
 class CabController {
@@ -6,7 +10,11 @@ class CabController {
      */
     private final ElevatorController elevatorController;
 
-    Cab[] cabs;
+    /**
+     * 
+     */
+    private final Cab[] cabs;
+    
     RequestProcessor[] cabsRequest;
     Thread[] cabsThread;
 
@@ -22,8 +30,14 @@ class CabController {
         this.cabsThread  = new Thread[2];
     }
 
+    /**
+     * @return the cabs
+     */
+    public Cab getCab(int cabID) {
+        return cabs[cabID];
+    }
 
-    void ProcessRequest(final int cabID, final int floorNumber) {
+    public void processRequest(final int cabID, final int floorNumber) {
         cabsRequest[cabID] = new RequestProcessor(cabID, floorNumber);
         
         this.cabsThread[cabID] = new Thread(cabsRequest[cabID]);

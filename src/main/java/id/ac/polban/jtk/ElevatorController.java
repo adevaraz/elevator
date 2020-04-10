@@ -1,5 +1,6 @@
 package id.ac.polban.jtk;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ElevatorController implements Runnable {
@@ -76,14 +77,9 @@ public class ElevatorController implements Runnable {
     /**
      * 
      */
-    public static abstract class Request implements Runnable {
+    public static abstract class Request implements Callable<Void> {
         public Request() {
 
-        }
-
-        @Override
-        public void run() {
-            
         }
     }
 

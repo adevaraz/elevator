@@ -1,3 +1,7 @@
+/**
+ * Contributor:
+ * - Raefaldhi Amartya Junior (181524026)
+ */
 package id.ac.polban.jtk;
 
 class RequestDispatcher implements Runnable {
@@ -17,10 +21,17 @@ class RequestDispatcher implements Runnable {
     public void run() {
         try {
             while (true) {
-                elevatorController.getRequestQueue().take();
+                // Process the request
+                elevatorController
+                    .getRequestQueue()
+                    .take()
+                    .call();
             }
         }
         catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }

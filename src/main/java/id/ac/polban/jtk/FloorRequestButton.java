@@ -1,20 +1,25 @@
+/**
+ * Contributor:
+ * - Raefaldhi Amartya Junior (181524026)
+ */
 package id.ac.polban.jtk;
 
-public class FloorRequestButton {
-    void turnLightOn() {
+public class FloorRequestButton extends FloorRequestButtonBase {
+    @Override
+    public void turnLightOn() {
+        this.getSignals().add(() -> {
+            super.turnLightOn();
 
+            return null;
+        });
     }
 
-    void turnLightOff() {
+    @Override
+    public void turnLightOff() {
+        this.getSignals().add(() -> {
+            super.turnLightOff();
 
-    }
-
-    static void Pressed(int cabID, int floorNumber) {
-        // ElevatorController.getInstance().getFloorRequestLogger().sendSignal(cabID, floorNumber, new ISignalResponse(){
-        //     @Override
-        //     public void onComplete() {
-        //         // TODO Auto-generated method stub
-        //     }
-        // } );
+            return null;
+        });
     }
 }
