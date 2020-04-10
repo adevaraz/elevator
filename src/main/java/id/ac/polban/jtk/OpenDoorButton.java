@@ -18,7 +18,7 @@ public class OpenDoorButton {
     boolean status; //pressed = true, released = false
     
     void setStatus(boolean status) {
-        status = this.status;
+        this.status = status;
     }
     
     boolean getStatus() {
