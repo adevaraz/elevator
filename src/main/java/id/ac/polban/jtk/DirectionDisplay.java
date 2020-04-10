@@ -9,10 +9,15 @@ package id.ac.polban.jtk;
  *
  * @author Zara Veda
  */
+
+enum Direction {
+    UP, DOWN;
+}
+
 public class DirectionDisplay {
-    private static boolean status; //true = up; false = down
+    Direction dir;
     
-    void setStatus(boolean status) {
-        this.status = status;
+    void setStatus(Direction currentDir) {
+        dir = currentDir;
     }
 }
