@@ -10,5 +10,5 @@ package id.ac.polban.jtk;
  * @author NAD
  */
 public class DoorOpeningDeviceImpl {
-    
-}
+
+    }

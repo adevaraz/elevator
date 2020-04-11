@@ -14,7 +14,7 @@ enum LightStatus {
     OFF, ON;
 }
 public class SummonRequestButton {
-      
+ 
     private LightStatus statuslight;
     boolean status; //true = pressed/turnlight summon button & false = released/turnoff summon button
     LightStatus DirectionUp, DirectionDown;
