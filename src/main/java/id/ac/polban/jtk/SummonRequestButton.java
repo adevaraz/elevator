@@ -41,37 +41,4 @@ public class SummonRequestButton {
         }
     }
     
-    //static void Pressed(enum direction, int floorNumber) {
-        // ElevatorController.getInstance().getSummonRequestLogger().sendSignal(cabID, floorNumber, new ISignalResponse(){
-        //     @Override
-        //     public void onComplete() {
-        //         // TODO Auto-generated method stub
-        //     }
-        // } );
-        // released(direction,floorNumber);
-    //}
-
-    void Released(int floorNumber, ElevatorEngine.Direction direction){
-        int floorNumberCab = cab.getCabNavigator().getFloorNumber();
-        if(floorNumber==floorNumberCab /*&& the door cab is open*/){
-            TurnLightOff(direction);
-            DoorTimer doorTimer = new DoorTimer();
-            doorTimer.StartTimer();
-            //DoorOpeningDevice.CloseDoors()
-        }
-    }
-
-    /**
-     * @return the status
-     */
-    public boolean isStatus() {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
 }
