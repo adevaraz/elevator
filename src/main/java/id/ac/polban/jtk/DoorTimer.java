@@ -12,4 +12,15 @@ package id.ac.polban.jtk;
  */
 public class DoorTimer {
     
+    void StartTimer(){
+        
+    }
+    void StopTimer(){
+        
+    }
+    void reset(){
+        
+    }
+    
+    //void notify(){}
 }
