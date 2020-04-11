@@ -12,8 +12,8 @@ public class FloorRequestSignal {
      * 
      */
     private final int cabID;
-
-    /**
+    
+      /**
      * 
      */
     private final int floorNumber;
@@ -37,10 +37,10 @@ public class FloorRequestSignal {
         //     // open the doors
         // }
         // else {
-        //     this.elevatorController.cabController.cabs[cabID].floorRequestButton[floorNumber].turnLightOn();
+        //     this.elevatorController.cabController.cabs[cabID].summonRequestButton[floorNumber].turnLightOn();
         //     requests.add(this.elevatorController.new FloorRequest(cabID, floorNumber));
 
-        //     // Add floor request to queue
+        //     // Add summon request to queue
         //     requests.drainTo(this.elevatorController.queue);
         // }
 
