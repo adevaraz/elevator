@@ -23,7 +23,9 @@ public class ElevatorController implements Runnable {
      *
      */
     private final FloorRequestLogger floorRequestLogger;
-
+    
+    
+    private final SummonRequestLogger summonRequestLogger;
     /**
      *
      */
@@ -32,6 +34,8 @@ public class ElevatorController implements Runnable {
     public ElevatorController() {
         this.requestQueue = new LinkedBlockingQueue<Request>();
 
+        this.summonRequestLogger= new SummonRequestLogger(this);    
+        
         this.requestDispatcher = new RequestDispatcher(this);
 
         this.floorRequestLogger = (FloorRequestLogger) Proxy.newProxyInstance(FloorRequestLogger.class.getClassLoader(), new Class[] { FloorRequestLogger.class }, new SignalModule(new FloorRequestLoggerImpl(this)));

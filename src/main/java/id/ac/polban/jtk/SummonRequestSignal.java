@@ -20,21 +20,28 @@ public class SummonRequestSignal {
     /**
      * 
      */
-    private int cabID;
+    private final int cabID;
+    
+    
+      /**
+     * 
+     */
+    private final boolean direction;
 
     /**
      * 
      */
-    private int floorNumber;
+    private final int floorNumber;
 
     /**
      * 
      */
     private  Response response;
 
-    public SummonRequestSignal(int cabID, int floorNumber, Response response) {
+    public SummonRequestSignal(int cabID,boolean direction, int floorNumber, Response response) {
         this.cabID = cabID;
         
+        this.direction= direction;       
         this.floorNumber = floorNumber;
 
         this.response = response;
@@ -46,10 +53,10 @@ public class SummonRequestSignal {
         //     // open the doors
         // }
         // else {
-        //     this.elevatorController.cabController.cabs[cabID].floorRequestButton[floorNumber].turnLightOn();
+        //     this.elevatorController.cabController.cabs[cabID].summonRequestButton[floorNumber].turnLightOn();
         //     requests.add(this.elevatorController.new FloorRequest(cabID, floorNumber));
 
-        //     // Add floor request to queue
+        //     // Add summon request to queue
         //     requests.drainTo(this.elevatorController.queue);
         // }
 
