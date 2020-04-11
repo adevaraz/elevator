@@ -4,7 +4,7 @@
  */
 package id.ac.polban.jtk;
 
-public abstract class FloorRequestButtonBase extends SignalModule {
+public class FloorRequestButtonImpl implements FloorRequestButton {
     /**
      * 
      */
@@ -21,21 +21,21 @@ public abstract class FloorRequestButtonBase extends SignalModule {
     /**
      * 
      */
-    public FloorRequestButtonBase() {
-        status = Status.OFF;
+    public FloorRequestButtonImpl() {
+        this.status = Status.OFF;
     }
     
     /**
      * 
      */
-    protected void turnLightOn() {
-        this.status = Status.OFF;
+    public void turnLightOn() {
+        this.status = Status.ON;
     }
 
     /**
      * 
      */
-    protected void turnLightOff() {
+    public void turnLightOff() {
         this.status = Status.OFF;
     }
 }

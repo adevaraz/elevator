@@ -6,7 +6,7 @@ package id.ac.polban.jtk;
 
 import id.ac.polban.jtk.ElevatorController.Request;
 
-public class FloorRequestLoggerBase extends SignalModule {
+public class FloorRequestLoggerImpl implements FloorRequestLogger {
     /**
      *
      */
@@ -15,7 +15,7 @@ public class FloorRequestLoggerBase extends SignalModule {
     /**
      * 
      */
-    public FloorRequestLoggerBase(ElevatorController elevatorController) {
+    public FloorRequestLoggerImpl(ElevatorController elevatorController) {
         this.elevatorController = elevatorController;
     }
 
@@ -24,7 +24,7 @@ public class FloorRequestLoggerBase extends SignalModule {
      * @param cabID
      * @param floorNumber
      */
-    protected void pressed(int cabID, int floorNumber) {
+    public void pressed(int cabID, int floorNumber) {
         // Add request to queue
         elevatorController
             .getRequestQueue()

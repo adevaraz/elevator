@@ -1,5 +1,7 @@
 package id.ac.polban.jtk;
 
+import java.lang.reflect.Proxy;
+
 class Cab {
     /**
      * 
@@ -11,16 +13,14 @@ class Cab {
      */
     private final CabNavigator cabNavigator;
 
-    public Cab () {
-        this.floorRequestButtons = new FloorRequestButton[6];
+    public Cab (int floorCount) {
+        this.floorRequestButtons = new FloorRequestButton[floorCount];
 
-        this.floorRequestButtons[0] = new FloorRequestButton();
-        this.floorRequestButtons[1] = new FloorRequestButton();
-        this.floorRequestButtons[2] = new FloorRequestButton();
-        this.floorRequestButtons[3] = new FloorRequestButton();
-        this.floorRequestButtons[4] = new FloorRequestButton();
-        this.floorRequestButtons[5] = new FloorRequestButton();
-
+        for (int i = 0; i < floorCount; ++i) {
+            this.floorRequestButtons[i] = (FloorRequestButton)Proxy.newProxyInstance(FloorRequestButton.class.getClassLoader(), 
+                                                                                     new Class[] {FloorRequestButton.class}, 
+                                                                                     new SignalModule(new FloorRequestButtonImpl()));
+        }
         this.cabNavigator = new CabNavigator(this);
     }
 
@@ -30,7 +30,6 @@ class Cab {
     public FloorRequestButton getFloorRequestButton(int floorNumber) {
         return floorRequestButtons[floorNumber];
     }
-
 
     /**
      * @return the cabNavigator

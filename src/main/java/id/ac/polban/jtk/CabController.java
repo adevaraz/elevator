@@ -6,6 +6,16 @@ package id.ac.polban.jtk;
 
 class CabController {
     /**
+     * 
+     */
+    static private final int FLOOR_COUNT = 6;
+
+    /**
+     * 
+     */
+    static private final int CAB_COUNT = 2;
+
+    /**
      *
      */
     private final ElevatorController elevatorController;
@@ -21,10 +31,11 @@ class CabController {
     public CabController (ElevatorController elevatorController) {
         this.elevatorController = elevatorController;
 
-        this.cabs = new Cab[2];
+        this.cabs = new Cab[CAB_COUNT];
 
-        this.cabs[0] = new Cab();
-        this.cabs[1] = new Cab();
+        for (int i = 0; i < CAB_COUNT; ++i) {
+            this.cabs[i] = new Cab(FLOOR_COUNT);
+        }
 
         this.cabsRequest = new RequestProcessor[2];
         this.cabsThread  = new Thread[2];

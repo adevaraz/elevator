@@ -4,28 +4,53 @@
  */
 package id.ac.polban.jtk;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class SignalModule implements Runnable {
-    private final LinkedBlockingQueue<Callable<Void>> signals;
-
-    public SignalModule() {
-        this.signals = new LinkedBlockingQueue<Callable<Void>>();
-    }
+/**
+ * Used for simulate concurency
+ */
+public class SignalModule implements InvocationHandler, Runnable {
+    /**
+     * 
+     */
+    private Object target;
 
     /**
-     * @return the signals
+     * 
      */
-    protected LinkedBlockingQueue<Callable<Void>> getSignals() {
-        return signals;
+    private final LinkedBlockingQueue<Callable<Object>> signals;
+
+    public SignalModule(Object target) {
+        this.target = target;
+
+        this.signals = new LinkedBlockingQueue<Callable<Object>>();
+
+        Thread thread = new Thread(this);
+        
+        thread.setDaemon(true);
+
+        thread.start();
+    }
+
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        this.signals.put(() -> {
+            return method.invoke(target, args);
+        });
+
+        return null;
     }
 
     @Override
     public void run() {
         try {
             while (true) {
-                signals.take().call();
+                signals
+                    .take()
+                    .call();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

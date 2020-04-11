@@ -1,6 +1,9 @@
 package id.ac.polban.jtk;
 
+import java.lang.reflect.Proxy;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ElevatorController implements Runnable {
@@ -9,6 +12,10 @@ public class ElevatorController implements Runnable {
      */
     private static final ElevatorController instance = new ElevatorController();
 
+    /**
+     * 
+     */
+    private final ExecutorService executor = Executors.newFixedThreadPool(10);
     /**
      *
      */
@@ -34,8 +41,9 @@ public class ElevatorController implements Runnable {
 
         this.requestDispatcher = new RequestDispatcher(this);
 
-        this.floorRequestLogger = new FloorRequestLogger(this);
-
+        this.floorRequestLogger = (FloorRequestLogger)Proxy.newProxyInstance(FloorRequestLogger.class.getClassLoader(), 
+                                                                             new Class[] {FloorRequestLogger.class}, 
+                                                                             new SignalModule(new FloorRequestLoggerImpl(this)));
         this.cabController = new CabController(this);
     }
 
@@ -44,6 +52,13 @@ public class ElevatorController implements Runnable {
      */
     public static ElevatorController getInstance() {
         return instance;
+    }
+
+    /**
+     * @return the executor
+     */
+    public ExecutorService getExecutor() {
+        return executor;
     }
 
     /**
@@ -86,16 +101,12 @@ public class ElevatorController implements Runnable {
     @Override
     public void run() {
         try {
-            Thread requestDispatcherThread = new Thread(this.requestDispatcher);
-            Thread floorRequestLoggerThread = new Thread(this.floorRequestLogger);
-
-            requestDispatcherThread.start();
-            requestDispatcherThread.join();
-
-            floorRequestLoggerThread.start();
-            floorRequestLoggerThread.join();
+            this.requestDispatcher.listen();
         } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        executor.execute(this.requestDispatcher);
     }
 }
+
