@@ -2,8 +2,8 @@ package id.ac.polban.jtk;
 
 public class FloorRequestSignal {
     /**
-     * 
-     */
+ *
+ */
     interface Response {
         void onComplete();
     }    
