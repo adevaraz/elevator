@@ -85,10 +85,10 @@ public class ElevatorController implements Runnable {
         public abstract int getCabID();
 
         public abstract int getFloorNumber();
-    }
+        }
 
-    @Override
-    public void run() {
+        @Override
+        public void run() {
         try {
             this.requestDispatcher.listen();
         } catch (InterruptedException e) {

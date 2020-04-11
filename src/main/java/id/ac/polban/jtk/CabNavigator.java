@@ -73,5 +73,5 @@ public class CabNavigator {
      */
     public synchronized int getFloorNumber() {
         return floorNumber;
-    }
-}
+            }
+        }

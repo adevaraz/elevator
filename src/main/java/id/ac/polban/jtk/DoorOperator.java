@@ -38,7 +38,7 @@ public class DoorOperator {
     void startOperation() {
         operator.doorOpened();
         operator.doorClosed();
-        
+
     }
     
     void doorOpened() {
@@ -74,6 +74,6 @@ public class DoorOperator {
     }
     
     void summonButtonPressed(int floorNumber, boolean direction) {
-        timer.StartTimer();
-    }
+        timer.StartTimer();     
+    }    
 }

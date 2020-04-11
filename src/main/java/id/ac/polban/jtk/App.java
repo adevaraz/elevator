@@ -2,6 +2,7 @@ package id.ac.polban.jtk;
 
 public final class App {
     /**
+
      * @throws InterruptedException
      * 
      */
