@@ -10,6 +10,11 @@ package id.ac.polban.jtk;
  *
  * @author Zara Veda
  */
+
+enum DoorState {
+    OPEN, CLOSE;
+}
+
 public class DoorOperator {
     OpenDoorButton button = new OpenDoorButton();
     
@@ -17,11 +22,20 @@ public class DoorOperator {
         
     }
     
-    void doorOpened() {
-        
+    /**
+     * penanggung jawab: Nadhilah 
+     */
+    void doorOpened(int cabID) {
+        //set status pintu jadi buka
+        //start timer -- tujuannya biar ketutup otomatis
+        //terus setelah beberapa detik, stop timer
+        //panggil method closeDoors di DoorOpeningDevice buat nutup pintu
     }
     
-    void doorClosed() {
+    /**
+     * penanggung jawab: Nadhilah 
+     */
+    void doorClosed(int cabID) {
         
     }
     

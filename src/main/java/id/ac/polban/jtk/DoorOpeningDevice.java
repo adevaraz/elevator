@@ -10,22 +10,17 @@ package id.ac.polban.jtk;
  * @author Zara Veda
  */
 public class DoorOpeningDevice {
+    DoorOperator door;
     
-    /**
-     * penanggung jawab: Nadhilah 
-     * @param cabID
-     * pintu elevator sudah terbuka, method doorsOpened
-     * menjalankan timer untuk menutup pintu elevator secara otomatis
-     */
-    void doorsOpened(int cabID) {
-        
+    public DoorOpeningDevice(DoorOperator door) {
+        this.door = door;
     }
     
     /**
-     * penanggung jawab: Nadhilah 
-     * pintu belum terbuka, method openDoors membuka pintu elevator
+     * penanggung jawab: Nadhilah
      */
     void openDoors() {
-        
+        //tambahin sleep beberapa detik
+        //panggil method doorOpened di DoorOperator
     }
 }
