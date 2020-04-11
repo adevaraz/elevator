@@ -6,6 +6,9 @@
 
 package id.ac.polban.jtk;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  *
  * @author RomaUlina
@@ -13,7 +16,11 @@ package id.ac.polban.jtk;
 public class DoorTimer {
     
     void StartTimer(){
-        
+        Timer timer = new Timer();
+        TimerTask task = new DoorHolder();
+        long delay = 1000; //milisecond
+        long period = 10000;
+        timer.schedule(task, delay, period);
     }
     void StopTimer(){
         
