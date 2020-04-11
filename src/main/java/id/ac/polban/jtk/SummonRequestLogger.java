@@ -12,7 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  class SummonRequestLogger implements Runnable {
     private int floorNumber;
     private ElevatorController elevatorController;
-    private LinkedBlockingQueue<FloorRequestSignal> signals;
+    private LinkedBlockingQueue<SummonRequestButton> signals;
     @Override
     public void run() {
         
