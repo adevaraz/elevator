@@ -7,12 +7,12 @@ package id.ac.polban.jtk;
 import java.util.concurrent.LinkedBlockingQueue;
 /**
  *
- * @author Asus
+ * @author Andhika
  */
  class SummonRequestLogger implements Runnable {
     private int floorNumber;
     private ElevatorController elevatorController;
-    private LinkedBlockingQueue<SummonRequestButton> signals;
+    private LinkedBlockingQueue<SummonRequestSignal> signals;
     @Override
     public void run() {
         

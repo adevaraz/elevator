@@ -7,7 +7,11 @@ package id.ac.polban.jtk;
 
 /**
  *
+<<<<<<< HEAD
  * @author RomaUlina
+=======
+ * @author Andhika
+>>>>>>> author
  */
 public class SummonRequestButton {
     boolean status = true; //true = pressed/turnlight summon button & false = released/turnoff summon button

@@ -7,7 +7,7 @@ package id.ac.polban.jtk;
 
 /**
  *
- * @author Asus
+ * @author Andhika
  */
 public class SummonRequestSignal {
      /**
