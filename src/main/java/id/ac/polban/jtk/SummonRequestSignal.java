@@ -10,6 +10,10 @@ package id.ac.polban.jtk;
  * @author Andhika
  */
 public class SummonRequestSignal {
+
+    SummonRequestSignal(int cabID, int floorNumber, FloorRequestSignal.Response response) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
      /**
      * 
      */
@@ -54,7 +58,7 @@ public class SummonRequestSignal {
         // }
         // else {
         //     this.elevatorController.cabController.cabs[cabID].summonRequestButton[floorNumber].turnLightOn();
-            requests.add(this.elevatorController.new SummonRequest(direction, floorNumber));
+         //    requests.add(this.elevatorController.new SummonRequest(direction, floorNumber));
 
         //     // Add summon request to queue
         //     requests.drainTo(this.elevatorController.queue);

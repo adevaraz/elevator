@@ -14,9 +14,28 @@ package id.ac.polban.jtk;
 >>>>>>> author
  */
 public class SummonRequestButton {
+<<<<<<< HEAD
     boolean status = true; //true = pressed/turnlight summon button & false = released/turnoff summon button
  
     void TurnLightOff(){
+=======
+      void turnLightOn() {
+
+    }
+
+    void turnLightOff() {
+        
+    }
+
+    static void Pressed(boolean direction, int floorNumber) {
+        // ElevatorController.getInstance().getFloorRequestLogger().sendSignal(cabID, floorNumber, new ISignalResponse(){
+        //     @Override
+        //     public void onComplete() {
+        //         // TODO Auto-generated method stub
+        //     }
+        // } );
+        // released(direction,floorNumber);
+>>>>>>> update
     }
     
     void Released( int floorNumber, boolean direction){

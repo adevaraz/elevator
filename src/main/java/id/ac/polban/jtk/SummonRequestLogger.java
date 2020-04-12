@@ -44,6 +44,7 @@ import java.util.concurrent.LinkedBlockingQueue;
     }
         public class SummonRequest extends ElevatorController.Request {
         int cabID;
+        boolean direction;
         int floorNumber;
     
         public SummonRequest (int cabID,boolean direction, int floorNumber) {
