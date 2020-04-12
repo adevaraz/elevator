@@ -42,8 +42,8 @@ import java.util.concurrent.LinkedBlockingQueue;
             DoorTimer doorTimer = new DoorTimer();
             doorTimer.StartTimer();
             //DoorOpeningDevice.CloseDoors()
+            }
         }
-    }
 
     /**
      * @return the status
