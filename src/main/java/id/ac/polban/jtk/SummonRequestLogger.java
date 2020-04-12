@@ -11,7 +11,6 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
  class SummonRequestLogger implements Runnable {
     private int floorNumber;
-    private boolean direction;
     
     private final ElevatorController elevatorController;
     
@@ -24,7 +23,7 @@ import java.util.concurrent.LinkedBlockingQueue;
     }
     
        public void sendSignal(int cabID, int floorNumber, SummonRequestSignal.Response response) {
-        signals.add(new SummonRequestSignal(cabID,direction, floorNumber, response));
+        signals.add(new SummonRequestSignal(cabID,Direction, floorNumber, response));
     }
     
     @Override
@@ -44,10 +43,10 @@ import java.util.concurrent.LinkedBlockingQueue;
     }
         public class SummonRequest extends ElevatorController.Request {
         int cabID;
-        boolean direction;
+        enum direction;
         int floorNumber;
     
-        public SummonRequest (int cabID,boolean direction, int floorNumber) {
+        public SummonRequest (int cabID,enum direction, int floorNumber) {
             super();
         }
     }

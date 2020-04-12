@@ -10,10 +10,6 @@ package id.ac.polban.jtk;
  * @author Andhika
  */
 public class SummonRequestSignal {
-
-    SummonRequestSignal(int cabID, int floorNumber, FloorRequestSignal.Response response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
      /**
      * 
      */
@@ -30,7 +26,9 @@ public class SummonRequestSignal {
       /**
      * 
      */
-    private final boolean direction;
+    private final enum direction{
+        UP,DOWN;
+    }
 
     /**
      * 
@@ -42,10 +40,9 @@ public class SummonRequestSignal {
      */
     private  Response response;
 
-    public SummonRequestSignal(int cabID,boolean direction, int floorNumber, Response response) {
+    public SummonRequestSignal(int cabID,enum direction, int floorNumber, Response response) {
         this.cabID = cabID;
-        
-        this.direction= direction;       
+              
         this.floorNumber = floorNumber;
 
         this.response = response;
