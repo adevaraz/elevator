@@ -29,8 +29,8 @@ public class SummonRequestButton {
     public void turnLightOff() {
         this.statuslight = LightStatus.ON;
     }
-    
-    
+      
+      
     void TurnLightOff(ElevatorEngine.Direction direction){
         if(direction == ElevatorEngine.Direction.UP){
             DirectionUp = LightStatus.OFF;
