@@ -54,7 +54,7 @@ public class SummonRequestSignal {
         // }
         // else {
         //     this.elevatorController.cabController.cabs[cabID].summonRequestButton[floorNumber].turnLightOn();
-        //     requests.add(this.elevatorController.new FloorRequest(cabID, floorNumber));
+            requests.add(this.elevatorController.new SummonRequest(direction, floorNumber));
 
         //     // Add summon request to queue
         //     requests.drainTo(this.elevatorController.queue);
