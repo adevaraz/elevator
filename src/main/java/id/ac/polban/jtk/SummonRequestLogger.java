@@ -5,6 +5,7 @@
  */
 package id.ac.polban.jtk;
 import java.util.concurrent.LinkedBlockingQueue;
+
 /**
  *
  * @author Andhika
