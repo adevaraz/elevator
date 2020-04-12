@@ -8,6 +8,7 @@ package id.ac.polban.jtk;
 /**
  *
  * @author Andhika
+ * @author RomaUlina
  */
 public class SummonRequestButton {
       enum LightStatus {
@@ -36,14 +37,14 @@ public class SummonRequestButton {
         // released(direction,floorNumber);
     }
     
-        static void Released(enum direction, int floorNumber) {
+    static void Released(enum direction, int floorNumber) {
                     //CabNavigator
         //if(true a cab was already stopped at the floor that the summon button was 
         //released from AND the doors of the cab are open [floorNumber==floor that cab Is On]){
             //TurnLightOff()
             //start timer in Door Timer 3 second;
             //DoorOpeningDevice.CloseDoors()
-        }
+        //}
         // ElevatorController.getInstance().getSummonRequestLogger().sendSignal(cabID, floorNumber, new ISignalResponse(){
         //     @Override
         //     public void onComplete() {

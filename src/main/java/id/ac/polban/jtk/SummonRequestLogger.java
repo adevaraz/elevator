@@ -32,7 +32,7 @@ import java.util.concurrent.LinkedBlockingQueue;
             while (true) {
                 // get signal from queue
                 SummonRequestSignal signal = this.signals.take();
-
+                
                 // process the signal
                 signal.process();
             }
@@ -43,10 +43,9 @@ import java.util.concurrent.LinkedBlockingQueue;
     }
         public class SummonRequest extends ElevatorController.Request {
         int cabID;
-        enum direction;
         int floorNumber;
     
-        public SummonRequest (int cabID,enum direction, int floorNumber) {
+        public SummonRequest (int cabID,Direction, int floorNumber) {
             super();
         }
     }
