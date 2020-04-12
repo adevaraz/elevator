@@ -40,5 +40,5 @@ public class SummonRequestButton {
             System.out.println("The summon button light is " + DirectionDown);
         }
     }
-    
-}
+      
+    }

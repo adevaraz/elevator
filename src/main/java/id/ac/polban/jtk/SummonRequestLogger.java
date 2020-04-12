@@ -11,7 +11,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @author Andhika
  */
  class SummonRequestLogger  {
-    
+ 
     private final ElevatorController elevatorController;
 
     SummonRequestLogger(ElevatorController elevatorController) {
