@@ -11,34 +11,50 @@ package id.ac.polban.jtk;
  * @author Zara Veda
  */
 
-import java.util.Timer;
-import java.util.TimerTask;
-        
+//import java.util.concurrent.TimeUnit;
+
 public class OpenDoorButton {
-    boolean status; //pressed = true, released = false
+    enum Status {
+        PRESSED, RELEASED;
+    }
     
-    void setStatus(boolean status) {
+    private Status status;
+    DoorOperator operator;
+    
+    /**
+     * Constructor
+     * @param operator
+     */
+    public OpenDoorButton(DoorOperator operator) {
+        this.operator = operator;
+    }
+    
+    void setStatus(Status status) {
         this.status = status;
     }
     
-    boolean getStatus() {
+    Status getStatus() {
         return status;
     }
     
     void pressed() {
-        setStatus(true);
+        
     }
     
+    /**
+     * penanggung jawab: Zara Veda
+     */
     void released() {
-        setStatus(false);
+        Status status = Status.RELEASED;
+        setStatus(status);
         
-        //Timer for hold opened door
-        Timer timer = new Timer();
-        TimerTask task = new DoorHolder();
-        long delay = 1000; //milisecond
-        long period = 10000;
-        timer.schedule(task, delay, period);
+        //Start Timer
+//        DoorTimer timer = new DoorTimer();
+//        timer.StartTimer();
+//        TimeUnit.SECONDS.sleep(1);
+//        timer.StopTimer();
         
         //Close the door
+        operator.doorClosed();
     }
 }

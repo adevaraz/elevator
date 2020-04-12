@@ -11,7 +11,7 @@ package id.ac.polban.jtk;
  * @author Zara Veda
  */
 public class DoorOperator {
-    OpenDoorButton button = new OpenDoorButton();
+    OpenDoorButton openDoorButton = new OpenDoorButton(this);
     
     void startOperation() {
         
@@ -41,11 +41,11 @@ public class DoorOperator {
         
     }
     
-    void openDoorButtonPressed(int cabId) {
-        button.pressed();
+    void openDoorButtonPressed(int cabID) {
+        openDoorButton.pressed();
     }
     
     void summonButtonPressed(int floorNumber, boolean direction) {
-        //direction : true means up, false means down
+        
     }
 }
