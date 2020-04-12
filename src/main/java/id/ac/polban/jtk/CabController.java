@@ -4,16 +4,18 @@
  */
 package id.ac.polban.jtk;
 
+import java.lang.reflect.Proxy;
+
 class CabController {
     /**
      * 
      */
-    static private final int FLOOR_COUNT = 6;
+    static public final int FLOOR_COUNT = 6;
 
     /**
      * 
      */
-    static private final int CAB_COUNT = 2;
+    static public final int CAB_COUNT = 2;
 
     /**
      *
@@ -23,56 +25,55 @@ class CabController {
     /**
      * 
      */
-    private final Cab[] cabs;
-    
-    RequestProcessor[] cabsRequest;
-    Thread[] cabsThread;
+    private final CabNavigator[] cabNavigators;
+
+    /**
+     * 
+     */
+    private final FloorRequestButton[][] floorRequestButtons;
+
+    /**
+     * 
+     */
+    private boolean[] isAvailable;
 
     public CabController (ElevatorController elevatorController) {
         this.elevatorController = elevatorController;
 
-        this.cabs = new Cab[CAB_COUNT];
+        this.cabNavigators = new CabNavigator[CAB_COUNT];
+
+        this.floorRequestButtons = new FloorRequestButton[CAB_COUNT][FLOOR_COUNT];
+
+        this.isAvailable = new boolean[CAB_COUNT];
 
         for (int i = 0; i < CAB_COUNT; ++i) {
-            this.cabs[i] = new Cab(FLOOR_COUNT);
-        }
+            this.cabNavigators[i] = new CabNavigator(new ElevatorEngine());
 
-        this.cabsRequest = new RequestProcessor[2];
-        this.cabsThread  = new Thread[2];
+            this.isAvailable[i] = true;
+
+            for (int j = 0; j < FLOOR_COUNT; ++j) {
+                this.floorRequestButtons[i][j] = (FloorRequestButton)Proxy.newProxyInstance(FloorRequestButton.class.getClassLoader(), new Class[] {FloorRequestButton.class}, new SignalModule(new FloorRequestButtonImpl()));
+            }
+        }
     }
 
-    /**
-     * @return the cabs
-     */
-    public Cab getCab(int cabID) {
-        return cabs[cabID];
+    public synchronized CabNavigator getCabNavigator(int cabID) {
+        return this.cabNavigators[cabID];
     }
 
-    public void processRequest(final int cabID, final int floorNumber) {
-        cabsRequest[cabID] = new RequestProcessor(cabID, floorNumber);
-        
-        this.cabsThread[cabID] = new Thread(cabsRequest[cabID]);
-
-        this.cabsThread[cabID].start();
+    public synchronized FloorRequestButton getFloorRequestButton(int cabID, int floorNumber) {
+        return this.floorRequestButtons[cabID][floorNumber];
     }
 
-    class RequestProcessor implements Runnable {
-        int cabID;
-        int floorNumber; 
+    public synchronized void processRequest(final int cabID, final int floorNumber) {
+        this.isAvailable[cabID] = false;
 
-        public RequestProcessor (final int cabID, final int floorNumber) {
-            this.cabID = cabID;
-            this.floorNumber = floorNumber;
-        }
+        this.getCabNavigator(cabID).moveTo(floorNumber);
 
-        @Override
-        public void run() {
-            cabs[cabID]
-                .getCabNavigator()
-                .moveTo(floorNumber);
+        this.isAvailable[cabID] = true;
+    }
 
-            // reset the request
-            cabsRequest[this.cabID] = null;
-        }
+    public synchronized boolean isAvailable(final int cabID) {
+        return this.isAvailable[cabID];
     }
 }

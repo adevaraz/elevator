@@ -25,6 +25,11 @@ public class FloorRequestLoggerImpl implements FloorRequestLogger {
      * @param floorNumber
      */
     public void pressed(int cabID, int floorNumber) {
+        // TODO: If door closed and elevator stopped at floor x
+        if (false) {
+            // TODO: Open the door
+            return;
+        }
         // Add request to queue
         elevatorController
             .getRequestQueue()
@@ -33,34 +38,36 @@ public class FloorRequestLoggerImpl implements FloorRequestLogger {
         // Turn the button light on
         elevatorController
             .getCabController()
-            .getCab(cabID)
-            .getFloorRequestButton(floorNumber)
+            .getFloorRequestButton(cabID, floorNumber)
             .turnLightOn();
     }
 
-    public class FloorRequest extends Request {
+    public static class FloorRequest extends Request {
         /**
          * 
          */
-        int cabID;
+        private int cabID;
 
         /**
          * 
          */
-        int floorNumber;
+        private int floorNumber;
 
         public FloorRequest(int cabID, int floorNumber) {
+            super();
 
+            this.cabID = cabID;
+            this.floorNumber = floorNumber;
         }
 
         @Override
-        public Void call() throws Exception {
-            // Process the request
-            elevatorController
-                .getCabController()
-                .processRequest(this.cabID, this.floorNumber);
+        public int getCabID() {
+            return this.cabID;
+        }
 
-            return null;
+        @Override
+        public int getFloorNumber() {
+            return this.floorNumber;
         }
     }
 }

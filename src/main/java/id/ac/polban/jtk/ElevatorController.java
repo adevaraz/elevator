@@ -1,9 +1,6 @@
 package id.ac.polban.jtk;
 
 import java.lang.reflect.Proxy;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ElevatorController implements Runnable {
@@ -12,10 +9,6 @@ public class ElevatorController implements Runnable {
      */
     private static final ElevatorController instance = new ElevatorController();
 
-    /**
-     * 
-     */
-    private final ExecutorService executor = Executors.newFixedThreadPool(10);
     /**
      *
      */
@@ -41,9 +34,8 @@ public class ElevatorController implements Runnable {
 
         this.requestDispatcher = new RequestDispatcher(this);
 
-        this.floorRequestLogger = (FloorRequestLogger)Proxy.newProxyInstance(FloorRequestLogger.class.getClassLoader(), 
-                                                                             new Class[] {FloorRequestLogger.class}, 
-                                                                             new SignalModule(new FloorRequestLoggerImpl(this)));
+        this.floorRequestLogger = (FloorRequestLogger) Proxy.newProxyInstance(FloorRequestLogger.class.getClassLoader(), new Class[] { FloorRequestLogger.class }, new SignalModule(new FloorRequestLoggerImpl(this)));
+
         this.cabController = new CabController(this);
     }
 
@@ -52,13 +44,6 @@ public class ElevatorController implements Runnable {
      */
     public static ElevatorController getInstance() {
         return instance;
-    }
-
-    /**
-     * @return the executor
-     */
-    public ExecutorService getExecutor() {
-        return executor;
     }
 
     /**
@@ -92,10 +77,10 @@ public class ElevatorController implements Runnable {
     /**
      * 
      */
-    public static abstract class Request implements Callable<Void> {
-        public Request() {
+    public static abstract class Request {
+        public abstract int getCabID();
 
-        }
+        public abstract int getFloorNumber();
     }
 
     @Override
@@ -103,10 +88,8 @@ public class ElevatorController implements Runnable {
         try {
             this.requestDispatcher.listen();
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        executor.execute(this.requestDispatcher);
     }
 }
 

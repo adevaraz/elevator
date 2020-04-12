@@ -1,10 +1,23 @@
 package id.ac.polban.jtk;
 
 public class ElevatorEngine {
-    enum Direction {
-        UP,
-        DOWN
-    }
+    public enum Direction {
+        UP(1),
+        DOWN(-1);
+
+        private final int value;
+
+        Direction(int value) {
+            this.value = value;
+        }
+
+        /**
+         * @return the value
+         */
+        public int getValue() {
+            return value;
+        }
+    };
 
     /**
      * 

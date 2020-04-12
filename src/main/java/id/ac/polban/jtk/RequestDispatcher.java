@@ -4,6 +4,8 @@
  */
 package id.ac.polban.jtk;
 
+import id.ac.polban.jtk.ElevatorController.Request;
+
 class RequestDispatcher implements Runnable {
     /**
 	 *
@@ -13,15 +15,13 @@ class RequestDispatcher implements Runnable {
     /**
      * 
      */
-    private Data data;
+    private boolean isActive = false;
 
 	/**
 	 * @param elevatorController
 	 */
 	RequestDispatcher(ElevatorController elevatorController) {
         this.elevatorController = elevatorController;
-        
-        this.data = new Data();
 	}
 
     /**
@@ -30,7 +30,7 @@ class RequestDispatcher implements Runnable {
      * @throws InterruptedException
      */
     synchronized void listen() throws InterruptedException {
-        if (!this.data.isActive) {
+        if (!this.isActive) {
             new Thread(this)
                 .start();
         }
@@ -40,7 +40,7 @@ class RequestDispatcher implements Runnable {
      * terminate listener
      */
     synchronized void terminate() {
-        this.data.isActive = false;        
+        this.isActive = false;        
     }
 
     /**
@@ -49,28 +49,37 @@ class RequestDispatcher implements Runnable {
     @Override
     public void run() {
         try {
-            this.data.isActive = true;
+            this.isActive = true;
 
-            while (this.data.isActive) {
-                // Process the request
-                elevatorController
-                    .getRequestQueue()
-                    .take()
-                    .call();
+            while (this.isActive) {
+                for (int i = 0; i < CabController.CAB_COUNT; ++i) {
+                    if (!elevatorController.getCabController().isAvailable(i)) {
+                        continue;
+                    }
+
+                    
+                    for (Request request : elevatorController.getRequestQueue()) {
+                        if (request.getCabID() != i) {
+                            continue;
+                        }
+
+                        // Process the request in distinct thread
+                        new Thread(() -> {
+                            elevatorController
+                                .getCabController()
+                                .processRequest(request.getCabID(), request.getFloorNumber());
+
+                            // remove request from the queue
+                            elevatorController.getRequestQueue().remove(request);
+                        }).start();
+
+                        break;
+                    }
+                }
             }
-        }
-        catch (InterruptedException e) {
-            e.printStackTrace();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * 
-     */
-    private static class Data {
-        private boolean isActive = false;
     }
 }
