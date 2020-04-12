@@ -22,8 +22,8 @@ import java.util.concurrent.LinkedBlockingQueue;
         this.signals = new LinkedBlockingQueue<SummonRequestSignal>();
     }
     
-       public void sendSignal(int cabID, int floorNumber, SummonRequestSignal.Response response) {
-        signals.add(new SummonRequestSignal(cabID,Direction, floorNumber, response));
+       public void sendSignal(int cabID,enum direction, int floorNumber, SummonRequestSignal.Response response) {
+        signals.add(new SummonRequestSignal(cabID,direction, floorNumber, response));
     }
     
     @Override
@@ -43,9 +43,10 @@ import java.util.concurrent.LinkedBlockingQueue;
     }
         public class SummonRequest extends ElevatorController.Request {
         int cabID;
+        enum direction;
         int floorNumber;
     
-        public SummonRequest (int cabID,Direction, int floorNumber) {
+        public SummonRequest (int cabID,enum direction, int floorNumber) {
             super();
         }
     }
