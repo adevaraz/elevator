@@ -26,6 +26,11 @@ class CabController {
      * 
      */
     private final CabNavigator[] cabNavigators;
+    
+    /**
+     * 
+     */
+    private final DoorOperator[2] doorOperator;
 
     /**
      * 
@@ -89,5 +94,9 @@ class CabController {
 
     public synchronized boolean isAvailable(final int cabID) {
         return this.isAvailable[cabID];
+    }
+    
+    public DoorOperator getDoorOperator(int cabID) {
+        return doorOperator[cabID];
     }
 }
