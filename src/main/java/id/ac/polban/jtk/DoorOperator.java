@@ -53,7 +53,11 @@ public class DoorOperator {
     }
     
     void openDoorButtonPressed(int cabID) {
-        openDoorButton.pressed();
+    	ElevatorController
+    	.getInstance()
+    	.getCabController()
+    	.getDoorOperator(cabID)
+        .openDoorButton.pressed();
     }
     
     void summonButtonPressed(int floorNumber, boolean direction) {
