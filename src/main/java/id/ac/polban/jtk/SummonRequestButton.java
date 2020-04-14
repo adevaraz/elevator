@@ -16,12 +16,11 @@ enum LightStatus {
 public class SummonRequestButton {
  
     private LightStatus statuslight;
-    boolean status; //true = pressed/turnlight summon button & false = released/turnoff summon button
     LightStatus DirectionUp, DirectionDown;
     Cab cab;
     
        public void turnLightOn() {
-        this.status = status.ON;
+        this.statuslight = LightStatus.ON;
     }
     /**
      * 
