@@ -16,6 +16,7 @@ enum DoorStatus {
 }
 
 public class DoorOperator {
+<<<<<<< HEAD
     OpenDoorButtonImpl openDoorButton = new OpenDoorButtonImpl(this);
     DoorStatus doorStatus;
     
@@ -26,33 +27,51 @@ public class DoorOperator {
     DoorStatus getDoorStatus() {
         return doorStatus;
     }
+=======
+    OpenDoorButton openDoorButton = new OpenDoorButton(this);
+    DoorOperator operator = new DoorOperator();
+    DoorOpeningDevice doorOpeningDevice = new DoorOpeningDevice(this);
+    SummonRequestButton summonButton = new SummonRequestButton();
+    DoorTimer timer = new DoorTimer();
+    
+    enum Status {
+        OPENED, CLOSED;
+    }
+    
+    private Status status;
+>>>>>>> membuat method di class DoorOpeningDevice dan DoorOperator
     
     void startOperation() {
+        operator.doorOpened();
+        operator.doorClosed();
         
     }
     
     void doorOpened() {
-        
+        this.status = Status.OPENED;
+        doorOpeningDevice.openDoors();
     }
     
     void doorClosed() {
-        
+        this.status = Status.OPENED;
+        doorOpeningDevice.closeDoors();
     }
     
     void suspend() {
-        
+        timer.StopTimer();
     }
     
     void resume() {
-        
+        timer.StartTimer();
     }
     
     void suspendFromLoad() {
-        
+        doorOpeningDevice.openDoors();
+        timer.StopTimer();
     }
     
     void resumeFromLoad() {
-        
+        timer.StartTimer();
     }
     
     void openDoorButtonPressed(int cabID) {
@@ -64,6 +83,6 @@ public class DoorOperator {
     }
     
     void summonButtonPressed(int floorNumber, boolean direction) {
-        
+        timer.StartTimer();
     }
 }
