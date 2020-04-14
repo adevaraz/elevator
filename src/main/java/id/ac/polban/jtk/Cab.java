@@ -5,6 +5,8 @@ class Cab {
      * 
      */
     private final FloorRequestButton[] floorRequestButton;
+    
+    private final SummonRequestButton[] summonRequestButton;
 
     /**
      * 
@@ -13,6 +15,7 @@ class Cab {
 
     public Cab () {
         this.floorRequestButton = new FloorRequestButton[6];
+        
 
         this.floorRequestButton[0] = new FloorRequestButton();
         this.floorRequestButton[1] = new FloorRequestButton();

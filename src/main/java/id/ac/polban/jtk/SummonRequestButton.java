@@ -21,13 +21,13 @@ public class SummonRequestButton {
     Cab cab;
     
        public void turnLightOn() {
-        this.statuslight = LightStatus.ON;
+        this.status = status.ON;
     }
     /**
      * 
      */
     public void turnLightOff() {
-        this.statuslight = LightStatus.ON;
+        this.statuslight = LightStatus.OFF;
     }
       
       
