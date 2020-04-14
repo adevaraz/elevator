@@ -10,5 +10,6 @@ package id.ac.polban.jtk;
  * @author Zara Veda
  */
 public interface DoorOpeningDevice {
-    
+    public void openDoors();
+    public void closeDoors();
 }
