@@ -34,6 +34,7 @@ public class ElevatorEngine extends TimerTask{
      */
     private double speed = 0;
 
+
     /**
      * Arah pergerakan elevator
      */

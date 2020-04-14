@@ -58,8 +58,8 @@ public class CabNavigator {
             }
 
             // FloorNumberDisplay.Show( floorNumber )
-            }
         }
+    }
 
     /**
      * 

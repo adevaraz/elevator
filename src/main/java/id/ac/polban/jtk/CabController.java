@@ -98,5 +98,5 @@ class CabController {
     
     public DoorOperator getDoorOperator(int cabID) {
         return doorOperator[cabID];
-    }
- }
+            }
+        }
