@@ -10,12 +10,15 @@ package id.ac.polban.jtk;
  *
  * @author Zara Veda
  */
+
 enum DoorStatus {
-    OPEN, CLOSE;
+    OPENED, CLOSED;
 }
 public class DoorOperator {
     
     OpenDoorButtonImpl openDoorButton = new OpenDoorButtonImpl(this);
+    SummonRequestButton summonButton = new SummonRequestButton();
+    DoorTimer timer = new DoorTimer();
     DoorStatus doorStatus;
     
     void setDoorStatus(DoorStatus status) {
@@ -25,28 +28,18 @@ public class DoorOperator {
     DoorStatus getDoorStatus() {
         return doorStatus;
     }
-    DoorOperator operator = new DoorOperator();
-    SummonRequestButton summonButton = new SummonRequestButton();
-    DoorTimer timer = new DoorTimer();
-    
-    enum Status {
-        OPENED, CLOSED;
-    }
-    
-    private Status status;
     
     void startOperation() {
-        operator.doorOpened();
-        operator.doorClosed();
-        
+        doorOpened();
+        doorClosed();
     }
     
     void doorOpened() {
-        this.status = Status.OPENED;
+        setDoorStatus(DoorStatus.OPENED);
     }
     
     void doorClosed() {
-        this.status = Status.OPENED;
+        setDoorStatus(DoorStatus.CLOSED);
     }
     
     void suspend() {
@@ -67,10 +60,10 @@ public class DoorOperator {
     
     void openDoorButtonPressed(int cabID) {
     	ElevatorController
-    	.getInstance()
-    	.getCabController()
-    	.getDoorOperator(cabID)
-        .openDoorButton.pressed();
+                        .getInstance()
+                        .getCabController()
+                        .getDoorOperator(cabID)
+                        .openDoorButton.pressed();
     }
     
     void summonButtonPressed(int floorNumber, boolean direction) {
