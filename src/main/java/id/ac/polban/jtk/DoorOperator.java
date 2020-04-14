@@ -14,7 +14,7 @@ enum DoorStatus {
     OPEN, CLOSE;
 }
 public class DoorOperator {
-    OpenDoorButton openDoorButton = new OpenDoorButton(this);
+    OpenDoorButtonImpl openDoorButton = new OpenDoorButtonImpl(this);
     DoorStatus doorStatus;
     
     void setDoorStatus(DoorStatus status) {
@@ -24,6 +24,7 @@ public class DoorOperator {
     DoorStatus getDoorStatus() {
         return doorStatus;
     }
+    
     void startOperation() {
         
     }
