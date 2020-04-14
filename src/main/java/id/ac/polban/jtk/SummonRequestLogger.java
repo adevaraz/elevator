@@ -5,6 +5,7 @@
  */
 package id.ac.polban.jtk;
 import java.util.concurrent.LinkedBlockingQueue;
+import id.ac.polban.jtk.ElevatorController.Request;
 
 /**
  *
@@ -59,7 +60,7 @@ import java.util.concurrent.LinkedBlockingQueue;
         this.status = status;
     }
     }
-    
+
         public static class SummonRequest extends Request {
         /**
          * 
