@@ -10,13 +10,11 @@ package id.ac.polban.jtk;
  *
  * @author Zara Veda
  */
-
 enum DoorStatus {
     OPEN, CLOSE;
 }
-
 public class DoorOperator {
-<<<<<<< HEAD
+    
     OpenDoorButtonImpl openDoorButton = new OpenDoorButtonImpl(this);
     DoorStatus doorStatus;
     
@@ -27,10 +25,7 @@ public class DoorOperator {
     DoorStatus getDoorStatus() {
         return doorStatus;
     }
-=======
-    OpenDoorButton openDoorButton = new OpenDoorButton(this);
     DoorOperator operator = new DoorOperator();
-    DoorOpeningDevice doorOpeningDevice = new DoorOpeningDevice(this);
     SummonRequestButton summonButton = new SummonRequestButton();
     DoorTimer timer = new DoorTimer();
     
@@ -39,7 +34,6 @@ public class DoorOperator {
     }
     
     private Status status;
->>>>>>> membuat method di class DoorOpeningDevice dan DoorOperator
     
     void startOperation() {
         operator.doorOpened();
@@ -49,12 +43,10 @@ public class DoorOperator {
     
     void doorOpened() {
         this.status = Status.OPENED;
-        doorOpeningDevice.openDoors();
     }
     
     void doorClosed() {
         this.status = Status.OPENED;
-        doorOpeningDevice.closeDoors();
     }
     
     void suspend() {
@@ -66,7 +58,6 @@ public class DoorOperator {
     }
     
     void suspendFromLoad() {
-        doorOpeningDevice.openDoors();
         timer.StopTimer();
     }
     
