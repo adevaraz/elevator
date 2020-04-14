@@ -7,7 +7,6 @@ public class ElevatorEngine extends TimerTask{
     public enum Direction {
         UP(1),
         DOWN(-1);
-
         private final int value;
 
         Direction(int value) {
@@ -21,7 +20,7 @@ public class ElevatorEngine extends TimerTask{
             return value;
         }
     };
-
+    
     /**
      * Posisi ketinggian dari elevator dengan asumsi elevator berada di 
      * ketinggian 0m saat awal beroperasi
@@ -38,12 +37,12 @@ public class ElevatorEngine extends TimerTask{
      * Arah pergerakan elevator
      */
     private Direction direction = Direction.UP;
+
     public static int i = 0;
     
     public void run(){
         ++i;
     }
-
     /**
      * 
      */
