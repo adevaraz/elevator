@@ -50,17 +50,17 @@ public class OpenDoorButton {
      * penanggung jawab: Zara Veda
      */
     void released() {
-        /* dikomen karena error, stuck belum bisa dapetin cabID*/
-//        if(ElevatorController.getCabController.isAvailable(cabID) && 
-//            status){
+        // TODO: If elevator stopped at floor x and the cab doors opened
+        if(true){
             Status status = Status.RELEASED;
             setStatus(status);
-//            Start Timer
+            
+            // Start Timer
 //            DoorTimer timer = new DoorTimer();
 //            timer.StartTimer();
 //            TimeUnit.SECONDS.sleep(1);
 //            timer.StopTimer();
-//        }
+        }
         
         //Close the door
         operator.doorClosed();
