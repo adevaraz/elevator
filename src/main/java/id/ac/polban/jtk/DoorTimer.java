@@ -13,21 +13,29 @@ import java.util.TimerTask;
  *
  * @author RomaUlina
  */
-public class DoorTimer {
+public class DoorTimer extends TimerTask {
+    private int i;
     
     void StartTimer(){
         Timer timer = new Timer();
-        TimerTask task = new DoorHolder();
+        TimerTask task = new DoorTimer();
         long delay = 1000; //milisecond
-        long period = 10000;
+        long period = 3000;
         timer.schedule(task, delay, period);
     }
+    
     void StopTimer(){
         
     }
+    
     void reset(){
         
     }
     
     //void notify(){}
+    
+    @Override
+    public void run() { 
+        System.out.println("DoorTimer: " + ++i);
+    }
 }
