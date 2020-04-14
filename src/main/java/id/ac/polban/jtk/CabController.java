@@ -30,6 +30,11 @@ class CabController {
     /**
      * 
      */
+    private final DoorOperator[] doorOperators;
+    
+    /**
+     * 
+     */
     private final FloorRequestButton[][] floorRequestButtons;
 
     /**
@@ -39,8 +44,10 @@ class CabController {
 
     public CabController (ElevatorController elevatorController) {
         this.elevatorController = elevatorController;
-
+  
         this.cabNavigators = new CabNavigator[CAB_COUNT];
+        
+        this.doorOperators = new DoorOperator[CAB_COUNT];
 
         this.floorRequestButtons = new FloorRequestButton[CAB_COUNT][FLOOR_COUNT];
 
@@ -55,6 +62,13 @@ class CabController {
                 this.floorRequestButtons[i][j] = (FloorRequestButton)Proxy.newProxyInstance(FloorRequestButton.class.getClassLoader(), new Class[] {FloorRequestButton.class}, new SignalModule(new FloorRequestButtonImpl()));
             }
         }
+    }
+    
+    /**
+     * penanggung jawab : ALvira PD
+     */
+    public synchronized DoorOperator getDoorOperator(int cabID) {
+    	return doorOperators[cabID];
     }
 
     public synchronized CabNavigator getCabNavigator(int cabID) {

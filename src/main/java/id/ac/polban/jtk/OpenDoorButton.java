@@ -37,8 +37,12 @@ public class OpenDoorButton {
         return status;
     }
     
+    /**
+     * penanggung jawab : ALvira PD
+     */
     void pressed() {
-        
+    	//Open the door
+        operator.doorOpened();
     }
     
     /**
