@@ -7,79 +7,71 @@ package id.ac.polban.jtk;
 import id.ac.polban.jtk.ElevatorController.Request;
 
 class RequestDispatcher implements Runnable {
-    /**
-	 *
-	 */
 	private final ElevatorController elevatorController;
 
-    /**
-     * 
-     */
-    private boolean isActive = false;
+    private boolean isListening = false;
 
-	/**
-	 * @param elevatorController
-	 */
 	RequestDispatcher(ElevatorController elevatorController) {
         this.elevatorController = elevatorController;
-	}
+    }
 
-    /**
-     * listen to the queue
-     * 
-     * @throws InterruptedException
-     */
-    synchronized void listen() throws InterruptedException {
-        if (!this.isActive) {
-            new Thread(this)
-                .start();
+    public boolean isListening() {
+        synchronized (this) {
+            return isListening;
         }
     }
 
-    /**
-     * terminate listener
-     */
-    synchronized void terminate() {
-        this.isActive = false;        
+    private void setListening(boolean isListening) {
+        synchronized (this) {
+            this.isListening = isListening;
+        }
     }
 
-    /**
-     * 
-     */
+    public void listen() throws InterruptedException {
+        if (!this.isListening()) {
+            // create new thread
+            new Thread(this)
+                .start();
+
+            // Wait for the new thread to run
+            while (!this.isListening()) {}
+        }
+    }
+
+    public void terminate() {
+        this.setListening(false);
+    }
+
     @Override
     public void run() {
-        try {
-            this.isActive = true;
+        this.setListening(true);
 
-            while (this.isActive) {
-                for (int i = 0; i < CabController.CAB_COUNT; ++i) {
-                    if (!elevatorController.getCabController().isAvailable(i)) {
+        while (this.isListening()) {
+            for (int i = 0; i < CabController.CAB_COUNT; ++i) {
+                if (!elevatorController.getCabController().isAvailable(i)) {
+                    continue;
+                }
+                
+                for (Request request : elevatorController.getRequestQueue()) {
+                    if (request.getCabID() != i) {
                         continue;
                     }
 
-                    
-                    for (Request request : elevatorController.getRequestQueue()) {
-                        if (request.getCabID() != i) {
-                            continue;
-                        }
+                    // Process the request in distinct thread
+                    new Thread(() -> {
+                        elevatorController
+                            .getCabController()
+                            .processRequest(request.getCabID(), request.getFloorNumber(), new CabController.ProcessRequestCallback() {
+                                @Override
+                                public void onFloorChanged(CabNavigator cabNavigator, int floorNumber) {
+                                    // Remove request here
+                                }
+                            });
+                    }).start();
 
-                        // Process the request in distinct thread
-                        new Thread(() -> {
-                            elevatorController
-                                .getCabController()
-                                .processRequest(request.getCabID(), request.getFloorNumber());
-
-                            // remove request from the queue
-                            elevatorController.getRequestQueue().remove(request);
-                        }).start();
-
-                        break;
-                    }
+                    break;
                 }
             }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

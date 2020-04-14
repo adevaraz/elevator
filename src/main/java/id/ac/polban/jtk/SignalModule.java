@@ -13,14 +13,8 @@ import java.util.concurrent.LinkedBlockingQueue;
  * Used for simulate concurency
  */
 public class SignalModule implements InvocationHandler, Runnable {
-    /**
-     * 
-     */
     private Object target;
 
-    /**
-     * 
-     */
     private final LinkedBlockingQueue<Callable<Object>> signals;
 
     public SignalModule(Object target) {
@@ -52,9 +46,11 @@ public class SignalModule implements InvocationHandler, Runnable {
                     .take()
                     .call();
             }
-        } catch (InterruptedException e) {
+        } 
+        catch (InterruptedException e) {
             e.printStackTrace();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }

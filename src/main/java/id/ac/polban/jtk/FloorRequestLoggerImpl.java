@@ -4,59 +4,50 @@
  */
 package id.ac.polban.jtk;
 
+import java.lang.reflect.Proxy;
+
 import id.ac.polban.jtk.ElevatorController.Request;
 
 public class FloorRequestLoggerImpl implements FloorRequestLogger {
-    /**
-     *
-     */
     private final ElevatorController elevatorController;
 
-    /**
-     * 
-     */
-    public FloorRequestLoggerImpl(ElevatorController elevatorController) {
+    private FloorRequestLoggerImpl(ElevatorController elevatorController) {
         this.elevatorController = elevatorController;
     }
 
-    /**
-     * 
-     * @param cabID
-     * @param floorNumber
-     */
     public void pressed(int cabID, int floorNumber) {
-        // TODO: If door closed and elevator stopped at floor x
         if (false) {
-            // TODO: Open the door
             return;
         }
+
         // Add request to queue
-        elevatorController
+        this.elevatorController
             .getRequestQueue()
             .add(new FloorRequest(cabID, floorNumber));
 
         // Turn the button light on
-        elevatorController
-            .getCabController()
-            .getFloorRequestButton(cabID, floorNumber)
-            .turnLightOn();
+        // elevatorController
+        //     .getCabController()
+        //     .getFloorRequestButton(cabID, floorNumber)
+        //     .turnLightOn();
+    }
+
+    public static FloorRequestLogger createInstance(ElevatorController elevatorController) {
+        return (FloorRequestLogger) Proxy.newProxyInstance(FloorRequestLogger.class.getClassLoader(),
+                                                           new Class[] {FloorRequestLogger.class},
+                                                           new SignalModule(new FloorRequestLoggerImpl(elevatorController)));
     }
 
     public static class FloorRequest extends Request {
-        /**
-         * 
-         */
         private int cabID;
 
-        /**
-         * 
-         */
         private int floorNumber;
 
         public FloorRequest(int cabID, int floorNumber) {
             super();
 
             this.cabID = cabID;
+
             this.floorNumber = floorNumber;
         }
 

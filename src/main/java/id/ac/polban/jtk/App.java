@@ -9,5 +9,11 @@ public final class App {
         ElevatorController
             .getInstance()
             .run();
+
+
+
+        ElevatorController
+            .getInstance()
+            .terminate();
     }
 }
