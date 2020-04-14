@@ -29,12 +29,16 @@ import java.util.concurrent.LinkedBlockingQueue;
             .add(new SummonRequest(cabID,direction, floorNumber));
 
         // Turn the button light on
-        elevatorController
-            .getCabController()
-            .getSummonRequestButton(cabID,direction, floorNumber)
-            .turnLightOn();
+     //   elevatorController
+          //  .getCabController()
+          //  .getSummonRequestButton(cabID,direction, floorNumber)
+           // .turnLightOn();
     }
-    
+     
+     public static SummonRequestLogger createInstance(ElevatorController elevatorController) {
+        return (SummonRequestLogger) Proxy.newProxyInstance(SummonRequestLogger.class.getClassLoader(),
+                                                           new Class[] {SummonRequestLogger.class},
+                                                           new SignalModule(new SummonRequestLoggerImpl(elevatorController)));
     void Released(int floorNumber, ElevatorEngine.Direction direction){
         int floorNumberCab = cab.getCabNavigator().getFloorNumber();
         if(floorNumber==floorNumberCab /*&& the door cab is open*/){

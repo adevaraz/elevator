@@ -5,6 +5,7 @@
  */
 package id.ac.polban.jtk;
 import id.ac.polban.jtk.ElevatorEngine.Direction;
+import java.lang.reflect.Proxy;
 /**
  *
  * @author Andhika
@@ -28,8 +29,13 @@ public class SummonRequestButton {
     public void turnLightOff() {
         this.statuslight = LightStatus.OFF;
     }
+    
       
-      
+      public static SummonRequestButton createInstance() {
+        return (SummonRequestButton)Proxy.newProxyInstance(SummonRequestButton.class.getClassLoader(),
+                                                          new Class[] {SummonRequestButton.class}, 
+                                                          new SignalModule(new SummonRequestButton()));
+    }
     void TurnLightOff(ElevatorEngine.Direction direction){
         if(direction == ElevatorEngine.Direction.UP){
             DirectionUp = LightStatus.OFF;
