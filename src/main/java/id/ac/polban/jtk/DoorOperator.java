@@ -10,9 +10,20 @@ package id.ac.polban.jtk;
  *
  * @author Zara Veda
  */
+enum DoorStatus {
+    OPEN, CLOSE;
+}
 public class DoorOperator {
     OpenDoorButton openDoorButton = new OpenDoorButton(this);
+    DoorStatus doorStatus;
     
+    void setDoorStatus(DoorStatus status) {
+        this.doorStatus = status;
+    }
+    
+    DoorStatus getDoorStatus() {
+        return doorStatus;
+    }
     void startOperation() {
         
     }
