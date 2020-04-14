@@ -11,9 +11,7 @@ package id.ac.polban.jtk;
  * @author Zara Veda
  */
 
-//import java.util.concurrent.TimeUnit;
-
-public class OpenDoorButton {
+public class OpenDoorButtonImpl {
     enum Status {
         PRESSED, RELEASED;
     }
@@ -26,7 +24,7 @@ public class OpenDoorButton {
      * @param operator
      * @param cab
      */
-    public OpenDoorButton(DoorOperator operator) {
+    public OpenDoorButtonImpl(DoorOperator operator) {
         this.operator = operator;
     }
     
@@ -38,8 +36,12 @@ public class OpenDoorButton {
         return status;
     }
     
+    /**
+     * penanggung jawab : ALvira PD
+     */
     void pressed() {
-        
+    	//Open the door
+        operator.doorOpened();
     }
     
     /**
