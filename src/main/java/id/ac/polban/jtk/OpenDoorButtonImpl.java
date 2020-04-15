@@ -49,15 +49,17 @@ public class OpenDoorButtonImpl {
      */
     void released() {
         // TODO: If elevator stopped at floor x and the cab doors opened
-        if(true){
+        //isAlive(cabID) ---> get the cabID
+        if(ElevatorController.getCabController.isAlive(0) &&
+                operator.getDoorStatus() == operator.DoorStatus.OPEN){
             Status status = Status.RELEASED;
             setStatus(status);
             
             // Start Timer
-//            DoorTimer timer = new DoorTimer();
-//            timer.StartTimer();
-//            TimeUnit.SECONDS.sleep(1);
-//            timer.StopTimer();
+            DoorTimer timer = new DoorTimer();
+            timer.StartTimer();
+            TimeUnit.SECONDS.sleep(1);
+            timer.StopTimer();
         }
         
         //Close the door
