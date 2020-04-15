@@ -49,7 +49,7 @@ public class OpenDoorButtonImpl {
     /**
      * penanggung jawab: Zara Veda
      */
-    void released() {
+    void released() throws InterruptedException {
         // TODO: If elevator stopped at floor x and the cab doors opened
         //isAvailable(cabID) ---> get the cabID
         
@@ -62,7 +62,7 @@ public class OpenDoorButtonImpl {
             // Start Timer
             DoorTimer timer = new DoorTimer();
             timer.StartTimer();
-//            TimeUnit.SECONDS.sleep(1);
+            TimeUnit.SECONDS.sleep(1);
             timer.StopTimer();
         }
         
