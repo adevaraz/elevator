@@ -2,10 +2,7 @@ package id.ac.polban.jtk;
 
 import id.ac.polban.jtk.ElevatorEngine.Direction;
 
-/**
- * 
- */
-public class CabNavigator {
+public class CabNavigator implements CabNavigatorResponse {
     private final ElevatorEngine engine;
 
     private final DirectionDisplay directionDisplay;
@@ -80,7 +77,9 @@ public class CabNavigator {
     }
 
     public interface MoveToCallback {
-        public void onFloorChanged(int floorNumber);
+        public void onFloorChanged(CabNavigatorResponse response, int floorNumber);
+
+        public void onFinished();
     }
 
     public void moveTo(int floorNumber, MoveToCallback moveToCallback) {
@@ -95,12 +94,12 @@ public class CabNavigator {
             // Wait for the floorNumber to change
             while (true) {
                 if (oldFloornumber != this.getFloorNumber()) {
-                    moveToCallback.onFloorChanged(this.getFloorNumber());
+                    moveToCallback.onFloorChanged(this, this.getFloorNumber());
                     break;
                 }
             }
         }
-        this.suspend();
+        moveToCallback.onFinished();
     }
 
     public void markerDetected() {

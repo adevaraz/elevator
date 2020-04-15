@@ -5,10 +5,6 @@
 package id.ac.polban.jtk;
 
 class CabController {
-    static public final int FLOOR_COUNT = 6;
-
-    static public final int CAB_COUNT = 2;
-
     private final CabNavigator[] cabNavigators;
     
     private final DoorOperator[] doorOperators;
@@ -17,35 +13,38 @@ class CabController {
 
     private boolean[] isAvailable;
 
-    public CabController () {
-        this.cabNavigators = new CabNavigator[CAB_COUNT];
+    CabController (final FloorRequestButton[][] floorRequestButtons,
+                   final ElevatorEngine elevatorEngine,
+                   final DirectionDisplay directionDisplay,
+                   final FloorNumberDisplay floorNumberDisplay) {
+        this.cabNavigators = new CabNavigator[floorRequestButtons.length];
 
-        this.doorOperators = new DoorOperator[CAB_COUNT];
+        this.doorOperators = new DoorOperator[floorRequestButtons.length];
 
-        this.floorRequestButtons = new FloorRequestButton[CAB_COUNT][FLOOR_COUNT];
+        this.floorRequestButtons = floorRequestButtons;
 
-        this.isAvailable = new boolean[CAB_COUNT];
+        this.isAvailable = new boolean[floorRequestButtons.length];
 
-        for (int i = 0; i < CAB_COUNT; ++i) {
-            this.cabNavigators[i] = new CabNavigator(new ElevatorEngine(), DirectionDisplayImpl.createInstance(), FloorNumberDisplayImpl.createInstance());
+        for (int i = 0; i < floorRequestButtons.length; ++i) {
+            this.cabNavigators[i] = new CabNavigator(elevatorEngine,
+                                                     directionDisplay,
+                                                     floorNumberDisplay);
+
+            this.doorOperators[i] = new DoorOperator();
 
             this.isAvailable[i] = true;
-
-            for (int j = 0; j < FLOOR_COUNT; ++j) {
-                this.floorRequestButtons[i][j] = FloorRequestButtonImpl.createInstance();
-            }
         }
     }
     
+    public CabNavigator getCabNavigator(int cabID) {
+        return this.cabNavigators[cabID];
+    }
+
     /**
      * penanggung jawab : ALvira PD
      */
     public synchronized DoorOperator getDoorOperator(int cabID) {
     	return doorOperators[cabID];
-    }
-
-    public CabNavigator getCabNavigator(int cabID) {
-        return this.cabNavigators[cabID];
     }
 
     public FloorRequestButton getFloorRequestButton(int cabID, int floorNumber) {
@@ -65,20 +64,31 @@ class CabController {
     }
 
     public interface ProcessRequestCallback {
-        public void onFloorChanged(CabNavigator cabNavigator, int floorNumber);
+        public void onFloorChanged(CabNavigatorResponse cabNavigator, int floorNumber);
     }
 
     public void processRequest(final int cabID, final int floorNumber, ProcessRequestCallback processRequestCallback) {
-        setAvailable(cabID, false);
+        synchronized (this) {
+            if (!this.isAvailable(cabID)) {
+                return;
+            }
+    
+            new Thread(() -> {
+                this.setAvailable(cabID, false);
 
-        this.getCabNavigator(cabID)
-            .moveTo(floorNumber, new CabNavigator.MoveToCallback() {
-                @Override
-                public void onFloorChanged(int changedTo) {
-                    processRequestCallback.onFloorChanged(CabController.this.getCabNavigator(cabID), changedTo);
-                }
-            });
+                this.getCabNavigator(cabID)
+                    .moveTo(floorNumber, new CabNavigator.MoveToCallback() {
+                        @Override
+                        public void onFloorChanged(CabNavigatorResponse response, int changedTo) {
+                            processRequestCallback.onFloorChanged(CabController.this.getCabNavigator(cabID), changedTo);
+                        }
 
-        setAvailable(cabID, true);
+                        @Override
+                        public void onFinished() {
+                            CabController.this.setAvailable(cabID, true);
+                        }
+                    });
+            }).start();
+        }
     }
 }

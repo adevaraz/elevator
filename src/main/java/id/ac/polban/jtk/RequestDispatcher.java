@@ -57,17 +57,38 @@ class RequestDispatcher implements Runnable {
                         continue;
                     }
 
-                    // Process the request in distinct thread
-                    new Thread(() -> {
-                        elevatorController
-                            .getCabController()
-                            .processRequest(request.getCabID(), request.getFloorNumber(), new CabController.ProcessRequestCallback() {
-                                @Override
-                                public void onFloorChanged(CabNavigator cabNavigator, int floorNumber) {
-                                    // Remove request here
+                    this.elevatorController
+                        .getCabController()
+                        .processRequest(request.getCabID(), request.getFloorNumber(), new CabController.ProcessRequestCallback(){
+                            @Override
+                            public void onFloorChanged(CabNavigatorResponse cabNavigator, int floorNumber) {
+                                for (Request req : elevatorController.getRequestQueue()) {
+                                    if (req.getFloorNumber() == floorNumber && req.getCabID() == request.getCabID()) {
+                                        cabNavigator
+                                            .suspend();
+
+                                        elevatorController
+                                            .getCabController()
+                                            .getFloorRequestButton(req.getCabID(), floorNumber)
+                                            .turnLightOff();
+
+                                        // open the door & close it back
+                                        elevatorController
+                                            .getCabController()
+                                            .getDoorOperator(req.getCabID())
+                                            .startOperation();
+
+                                        elevatorController
+                                            .getRequestQueue()
+                                            .remove(req);
+
+                                        // continue the operation
+                                        cabNavigator
+                                            .resume();
+                                    }
                                 }
-                            });
-                    }).start();
+                            }
+                        });
 
                     break;
                 }

@@ -3,7 +3,29 @@ package id.ac.polban.jtk;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ElevatorController implements Runnable {
-    private static final ElevatorController instance = new ElevatorController();
+    private static final ElevatorController 
+        instance = new ElevatorController(
+                       new FloorRequestButton[][] {
+                           {
+                               FloorRequestButtonImpl.createInstance(),
+                               FloorRequestButtonImpl.createInstance(),
+                               FloorRequestButtonImpl.createInstance(),
+                               FloorRequestButtonImpl.createInstance(),
+                               FloorRequestButtonImpl.createInstance(),
+                               FloorRequestButtonImpl.createInstance()
+                           },
+                           {
+                               FloorRequestButtonImpl.createInstance(),
+                               FloorRequestButtonImpl.createInstance(),
+                               FloorRequestButtonImpl.createInstance(),
+                               FloorRequestButtonImpl.createInstance(),
+                               FloorRequestButtonImpl.createInstance(),
+                               FloorRequestButtonImpl.createInstance()
+                           }
+                       },
+                       new ElevatorEngine(),
+                       DirectionDisplayImpl.createInstance(),
+                       FloorNumberDisplayImpl.createInstance());
 
     private final LinkedBlockingQueue<Request> requestQueue;
 
@@ -15,7 +37,10 @@ public class ElevatorController implements Runnable {
 
     private final CabController cabController;
 
-    private ElevatorController() {
+    private ElevatorController(final FloorRequestButton[][] floorRequestButtons, 
+                               final ElevatorEngine elevatorEngine, 
+                               final DirectionDisplay directionDisplay, 
+                               final FloorNumberDisplay floorNumberDisplay) {
         this.requestQueue = new LinkedBlockingQueue<Request>();
 
         this.requestDispatcher = new RequestDispatcher(this);
@@ -24,7 +49,7 @@ public class ElevatorController implements Runnable {
         
         // this.summonRequestLogger= new SummonRequestLogger(this);
 
-        this.cabController = new CabController();
+        this.cabController = new CabController(floorRequestButtons, elevatorEngine, directionDisplay, floorNumberDisplay);
     }
 
     public static ElevatorController getInstance() {
