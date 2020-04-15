@@ -13,44 +13,23 @@ import id.ac.polban.jtk.ElevatorEngine.Direction;
 enum LightStatus {
     OFF, ON;
 }
-
 public class SummonRequestButton {
-      
+    ElevatorEngine.Direction direction;  
+    private DoorOperator doorOperator;
     private LightStatus statuslight;
+
     LightStatus DirectionUp, DirectionDown;
     Cab cab;
     
-    /**
-     * @param status the status to set
-     */
-    public void setLightStatus(LightStatus status) {
-        this.statuslight = status;
+       public void turnLightOn() {
+        this.statuslight = LightStatus.ON;
     }
     
-    /**
-     * @return the status
-     */
-    public boolean isStatus() {
-        return status;
-    }
-    
-    public void turnLightOn() {
-        setLightStatus(LightStatus.ON);
-    }
-    
-    /**
-     * 
-     */
-    public void turnLightOff() {
-        setLightStatus(LightStatus.OFF);
-    }
-    
-    
-    void TurnLightOff(ElevatorEngine.Direction direction){
-        if(direction == ElevatorEngine.Direction.UP){
+    void TurnLightOff(Direction direction){
+        if(direction.getValue() == Direction.UP.getValue()){
             DirectionUp = LightStatus.OFF;
             System.out.println("The summon button light is " + DirectionUp);
-        }else if(direction == ElevatorEngine.Direction.DOWN){
+        }else if(direction.getValue() == Direction.UP.getValue()){
             DirectionDown = LightStatus.OFF;
             System.out.println("The summon button light is " + DirectionDown);
         }
@@ -66,13 +45,13 @@ public class SummonRequestButton {
         // released(direction,floorNumber);
     //}
 
-    void Released(int floorNumber, ElevatorEngine.Direction direction){
+    void Released(int floorNumber, Direction direction){
         int floorNumberCab = cab.getCabNavigator().getFloorNumber();
-        if(floorNumber==floorNumberCab /*&& the door cab is open*/){
+        if(floorNumber==floorNumberCab && doorOperator.getDoorStatus()==doorOperator.doorStatus.OPENED){
             TurnLightOff(direction);
             DoorTimer doorTimer = new DoorTimer();
             doorTimer.StartTimer();
-            //DoorOpeningDevice.CloseDoors()
+            doorOperator.doorClosed();
         }
     }
 }
