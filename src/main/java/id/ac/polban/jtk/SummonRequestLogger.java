@@ -17,7 +17,7 @@ import java.util.concurrent.LinkedBlockingQueue;
     SummonRequestLogger(ElevatorController elevatorController) {
         this.elevatorController = elevatorController;
     }
-     void Pressed(enum direction, int floorNumber) {
+     void Pressed(int floorNumber,ElevatorEngine.Direction direction) {
       // TODO: If door closed and elevator stopped at floor x
         if (false) {
             // TODO: Open the door
@@ -29,10 +29,10 @@ import java.util.concurrent.LinkedBlockingQueue;
             .add(new SummonRequest(cabID,direction, floorNumber));
 
         // Turn the button light on
-     //   elevatorController
-          //  .getCabController()
-          //  .getSummonRequestButton(cabID,direction, floorNumber)
-           // .turnLightOn();
+        elevatorController
+           .getCabController()
+            .getSummonRequestButton(cabID,direction, floorNumber)
+           .turnLightOn();
     }
      
      public static SummonRequestLogger createInstance(ElevatorController elevatorController) {
