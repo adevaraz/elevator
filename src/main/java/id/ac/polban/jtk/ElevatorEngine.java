@@ -3,6 +3,11 @@ package id.ac.polban.jtk;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ *
+ * @author IchaCahyaWulan
+ */
+
 public class ElevatorEngine extends TimerTask{
     public enum Direction {
         UP(1),
@@ -37,22 +42,17 @@ public class ElevatorEngine extends TimerTask{
      * Arah pergerakan elevator
      */
     private Direction direction = Direction.UP;
-
-    public static int i = 0;
     
     public void run(){
-        ++i;
+        this.height += speed;
     }
     /**
      * 
      */
     public ElevatorEngine() {
-        // Buat timer yang akan dapat mengubah variable `height` dalam setiap
-        // detiknya tergantung speed dan direction
         Timer timer = new Timer();
-        TimerTask task = new ElevatorEngine(); 
           
-        timer.schedule(task, 1000, 1000); 
+        timer.schedule(this, 1000, 1000); 
     }
 
     /**
@@ -62,7 +62,7 @@ public class ElevatorEngine extends TimerTask{
      */
     public void move(double speed, Direction direction) {
         // ubah variable height dan direction
-        this.height = i * speed;
+        this.speed = speed;
         this.direction = direction;
     }
 
