@@ -18,11 +18,10 @@ import java.util.concurrent.LinkedBlockingQueue;
         this.elevatorController = elevatorController;
     }
      void Pressed(int floorNumber,ElevatorEngine.Direction direction) {
-      // TODO: If door closed and elevator stopped at floor x
-        if (false) {
-            // TODO: Open the door
-            return;
-        }
+        int floorNumberCab= cab.getCabNavigator().getFloorNumber();
+        if (floorNumber==floorNumberCab) {
+            //DoorOpeningDevice.openDoors();
+        } else{
         // Add request to queue
         elevatorController
             .getRequestQueue()
@@ -33,6 +32,7 @@ import java.util.concurrent.LinkedBlockingQueue;
            .getCabController()
             .getSummonRequestButton(cabID,direction, floorNumber)
            .turnLightOn();
+        }
     }
      
      public static SummonRequestLogger createInstance(ElevatorController elevatorController) {
