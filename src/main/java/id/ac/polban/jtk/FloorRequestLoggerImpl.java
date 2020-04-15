@@ -15,7 +15,12 @@ public class FloorRequestLoggerImpl implements FloorRequestLogger {
         this.elevatorController = elevatorController;
     }
 
+    /**
+     * contributor: Raefaldhi Amartya J
+     */
     public void pressed(int cabID, int floorNumber) {
+        System.out.println("FloorRequestLogger.Pressed(" + cabID + ", " + floorNumber + ")");
+
         if (false) {
             return;
         }
@@ -24,21 +29,18 @@ public class FloorRequestLoggerImpl implements FloorRequestLogger {
         this.elevatorController
             .getRequestQueue()
             .add(new FloorRequest(cabID, floorNumber));
-
-        // Turn the button light on
-        // elevatorController
-        //     .getCabController()
-        //     .getFloorRequestButton(cabID, floorNumber)
-        //     .turnLightOn();
     }
 
+    /**
+     * contributor: Raefaldhi Amartya J
+     */
     public static FloorRequestLogger createInstance(ElevatorController elevatorController) {
         return (FloorRequestLogger) Proxy.newProxyInstance(FloorRequestLogger.class.getClassLoader(),
                                                            new Class[] {FloorRequestLogger.class},
                                                            new SignalModule(new FloorRequestLoggerImpl(elevatorController)));
     }
 
-    public static class FloorRequest extends Request {
+    public class FloorRequest extends Request {
         private int cabID;
 
         private int floorNumber;
@@ -49,6 +51,13 @@ public class FloorRequestLoggerImpl implements FloorRequestLogger {
             this.cabID = cabID;
 
             this.floorNumber = floorNumber;
+
+            // Turn the button light on
+            ElevatorController
+                .getInstance()
+                .getCabController()
+                .getFloorRequestButton(this.getCabID(), this.getFloorNumber())
+                .turnLightOn();
         }
 
         @Override
@@ -59,6 +68,16 @@ public class FloorRequestLoggerImpl implements FloorRequestLogger {
         @Override
         public int getFloorNumber() {
             return this.floorNumber;
+        }
+
+        @Override
+        public void onDelete() {
+            // Turn the button light on
+            ElevatorController
+                .getInstance()
+                .getCabController()
+                .getFloorRequestButton(this.getCabID(), this.getFloorNumber())
+                .turnLightOff();
         }
     }
 }

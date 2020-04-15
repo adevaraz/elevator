@@ -1,72 +1,106 @@
 package id.ac.polban.jtk;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author Zara Veda
  */
-
 public class DoorOperator {
     
     public enum DoorStatus {
         OPENED, CLOSED;
     }
     
-    OpenDoorButtonImpl openDoorButton = new OpenDoorButtonImpl(this);
-    SummonRequestButton summonButton = new SummonRequestButton();
-    DoorTimer timer = new DoorTimer();
+    OpenDoorButton openDoorButton;
+    SummonRequestButton summonButton ;
+    DoorOpeningDevice doorDevice;
     DoorStatus doorStatus;
+    DoorTimer timer = new DoorTimer();
     
+    public DoorOperator(final DoorOpeningDevice doorOpeningDevice, final OpenDoorButton openDoorButton) {
+        this.doorDevice = doorOpeningDevice;
+
+        this.openDoorButton = openDoorButton;
+
+        // summonButton = new SummonRequestButton();
+        doorStatus = DoorStatus.CLOSED;
+    }
+    
+    /**
+     * contributor: Zara Veda
+     */
     void setDoorStatus(DoorStatus status) {
         this.doorStatus = status;
     }
     
+    /**
+     * contributor: Roma Ulina P
+     */
     DoorStatus getDoorStatus() {
         return doorStatus;
     }
     
+    /**
+     * contributor: Nadhilah Nurfajrina
+     */
     void startOperation() {
-        doorOpened();
-        doorClosed();
+        doorDevice.openDoors();
+        timer.StartTimer();
+        doorDevice.closeDoors();
     }
     
+    /**
+     * contributor: Alvira PD
+     */
     void doorOpened() {
         setDoorStatus(DoorStatus.OPENED);
     }
     
+    /**
+     * contributor: Zara Veda
+     */
     void doorClosed() {
         setDoorStatus(DoorStatus.CLOSED);
     }
     
+    /**
+     * contributor: 
+     */
     void suspend() {
         timer.StopTimer();
     }
     
+    /**
+     * contributor: 
+     */
     void resume() {
         timer.StartTimer();
     }
     
+    /**
+     * contributor: 
+     */
     void suspendFromLoad() {
+        this.doorOpened();
         timer.StopTimer();
     }
     
+    /**
+     * contributor: 
+     */
     void resumeFromLoad() {
         timer.StartTimer();
     }
     
-    void openDoorButtonPressed(int cabID) {
-    	ElevatorController
-                        .getInstance()
-                        .getCabController()
-                        .getDoorOperator(cabID)
-                        .openDoorButton.pressed();
+    /**
+     * contributor: Alvira PD
+     */
+    void openDoorButtonPressed() {
+        this.startOperation();
     }
     
+    /**
+     * contributor: M. Andhika Z
+     */
     void summonButtonPressed(int floorNumber, boolean direction) {
         timer.StartTimer();
     }

@@ -8,25 +8,42 @@ package id.ac.polban.jtk;
 import java.lang.reflect.Proxy;
 
 public class FloorRequestButtonImpl implements FloorRequestButton {
-    public enum Status {ON, OFF}
+    private int cabID;
 
-    private Status status;
+    private int floorNumber;
 
-    private FloorRequestButtonImpl() {
-        this.status = Status.OFF;
+    private enum Status {OFF, ON}
+
+    private Status status = Status.OFF;
+
+    private FloorRequestButtonImpl(int cabID, int floorNumber) {
+        this.cabID = cabID;
+
+        this.floorNumber = floorNumber;
     }
 
+    /**
+     * contributor: Raefaldhi Amartya J
+     */
     public void turnLightOn() {
+        System.out.println("TurnLightOn(" + this.cabID + ")-- floorNumber: " + this.floorNumber);
         this.status = Status.ON;
     }
 
+    /**
+     * contributor: Raefaldhi Amartya J
+     */
     public void turnLightOff() {
+        System.out.println("TurnLightOff(" + this.cabID + ")-- floorNumber: " + this.floorNumber);
         this.status = Status.OFF;
     }
 
-    public static FloorRequestButton createInstance() {
+    /**
+     * contributor: Raefaldhi Amartya J
+     */
+    public static FloorRequestButton createInstance(int cabID, int floorNumber) {
         return (FloorRequestButton)Proxy.newProxyInstance(FloorRequestButton.class.getClassLoader(),
                                                           new Class[] {FloorRequestButton.class}, 
-                                                          new SignalModule(new FloorRequestButtonImpl()));
+                                                          new SignalModule(new FloorRequestButtonImpl(cabID, floorNumber)));
     }
 }

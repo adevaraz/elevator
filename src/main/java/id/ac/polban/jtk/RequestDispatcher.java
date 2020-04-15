@@ -47,7 +47,7 @@ class RequestDispatcher implements Runnable {
         this.setListening(true);
 
         while (this.isListening()) {
-            for (int i = 0; i < CabController.CAB_COUNT; ++i) {
+            for (int i = 0; i < this.elevatorController.getCabController().getCabCount(); ++i) {
                 if (!elevatorController.getCabController().isAvailable(i)) {
                     continue;
                 }
@@ -67,10 +67,8 @@ class RequestDispatcher implements Runnable {
                                         cabNavigator
                                             .suspend();
 
-                                        elevatorController
-                                            .getCabController()
-                                            .getFloorRequestButton(req.getCabID(), floorNumber)
-                                            .turnLightOff();
+                                        // Notify request fulfilled
+                                        req.onDelete();
 
                                         // open the door & close it back
                                         elevatorController
@@ -78,6 +76,7 @@ class RequestDispatcher implements Runnable {
                                             .getDoorOperator(req.getCabID())
                                             .startOperation();
 
+                                        System.out.println("Removing " + floorNumber + " from the cab + " + req.getCabID()  + " queue");
                                         elevatorController
                                             .getRequestQueue()
                                             .remove(req);

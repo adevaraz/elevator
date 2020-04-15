@@ -5,6 +5,9 @@ public interface FloorRequestButton {
 
     public void turnLightOff();
 
+    /**
+     * contributor: Raefaldhi Amartya J
+     */
     public static void pressed(final int cabID, final int floorNumber) {
         ElevatorController
             .getInstance()

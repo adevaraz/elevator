@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package id.ac.polban.jtk;
 
 import java.util.Timer;
@@ -15,17 +9,26 @@ import java.util.TimerTask;
  */
 public class DoorTimer extends TimerTask {
     private int i;
+    Timer timer;
     
+    /**
+     * contributor: Roma Ulina P
+     */
     void StartTimer(){
-        Timer timer = new Timer();
-        TimerTask task = new DoorTimer();
+        timer = new Timer();
         long delay = 1000; //milisecond
         long period = 3000;
-        timer.schedule(task, delay, period);
+
+        System.out.println("[start timer.");
+        timer.schedule(this, delay, period);
     }
     
+    /**
+     * contributor: Zara Veda
+     */
     void StopTimer(){
-        
+        timer.cancel();
+        timer.purge();
     }
     
     void reset(){
@@ -36,6 +39,6 @@ public class DoorTimer extends TimerTask {
     
     @Override
     public void run() { 
-        System.out.println("DoorTimer: " + ++i);
+        System.out.println("Timer: " + ++i);
     }
 }

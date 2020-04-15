@@ -8,6 +8,8 @@ public class DirectionDisplayImpl implements DirectionDisplay {
     @Override
     public void show(Direction direction) {
         this.direction = direction;
+
+        System.out.println("DirectionDisplay.show(" + (this.direction == Direction.UP ? "UP" : "DOWN") + ")");
     }
 
     public static DirectionDisplay createInstance() {
