@@ -19,12 +19,12 @@ public class DoorOperator {
     
     OpenDoorButtonImpl openDoorButton;
     SummonRequestButton summonButton ;
-    DoorOpeningDeviceImpl doorOpeningDevice;
+    DoorOpeningDeviceImpl doorDevice;
     DoorStatus doorStatus;
     DoorTimer timer = new DoorTimer();
     
     public DoorOperator(DoorOperator operator) {
-        doorOpeningDevice = new DoorOpeningDeviceImpl(operator);
+        doorDevice = new DoorOpeningDeviceImpl(operator);
         openDoorButton = new OpenDoorButtonImpl(operator);
         summonButton = new SummonRequestButton();
         doorStatus = DoorStatus.CLOSED;
@@ -39,9 +39,9 @@ public class DoorOperator {
     }
     
     void startOperation() {
-        doorOpeningDevice.openDoors();
+        doorDevice.openDoors();
         timer.StartTimer();
-        doorOpeningDevice.closeDoors();
+        doorDevice.closeDoors();
     }
     
     void doorOpened() {
@@ -61,6 +61,7 @@ public class DoorOperator {
     }
     
     void suspendFromLoad() {
+        this.doorOpened();
         timer.StopTimer();
     }
     
