@@ -1,5 +1,7 @@
 package id.ac.polban.jtk;
 
+import java.util.concurrent.TimeUnit;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -49,16 +51,18 @@ public class OpenDoorButtonImpl {
      */
     void released() {
         // TODO: If elevator stopped at floor x and the cab doors opened
-        //isAlive(cabID) ---> get the cabID
-        if(ElevatorController.getCabController.isAlive(0) &&
-                operator.getDoorStatus() == operator.DoorStatus.OPEN){
+        //isAvailable(cabID) ---> get the cabID
+        
+        if(ElevatorController.getInstance().getCabController().isAvailable(0) &&
+                (operator.getDoorStatus() == DoorOperator.DoorStatus.OPENED)){
+            
             Status status = Status.RELEASED;
             setStatus(status);
             
             // Start Timer
             DoorTimer timer = new DoorTimer();
             timer.StartTimer();
-            TimeUnit.SECONDS.sleep(1);
+//            TimeUnit.SECONDS.sleep(1);
             timer.StopTimer();
         }
         

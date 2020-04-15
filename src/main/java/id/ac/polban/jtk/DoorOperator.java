@@ -11,10 +11,11 @@ package id.ac.polban.jtk;
  * @author Zara Veda
  */
 
-enum DoorStatus {
-    OPENED, CLOSED;
-}
 public class DoorOperator {
+    
+    public enum DoorStatus {
+        OPENED, CLOSED;
+    }
     
     OpenDoorButtonImpl openDoorButton = new OpenDoorButtonImpl(this);
     SummonRequestButton summonButton = new SummonRequestButton();
