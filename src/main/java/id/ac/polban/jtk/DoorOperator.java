@@ -17,10 +17,18 @@ public class DoorOperator {
         OPENED, CLOSED;
     }
     
-    OpenDoorButtonImpl openDoorButton = new OpenDoorButtonImpl(this);
-    SummonRequestButton summonButton = new SummonRequestButton();
-    DoorTimer timer = new DoorTimer();
+    OpenDoorButtonImpl openDoorButton;
+    SummonRequestButton summonButton ;
+    DoorOpeningDeviceImpl doorOpeningDevice;
     DoorStatus doorStatus;
+    DoorTimer timer = new DoorTimer();
+    
+    public DoorOperator(DoorOperator operator) {
+        doorOpeningDevice = new DoorOpeningDeviceImpl(operator);
+        openDoorButton = new OpenDoorButtonImpl(operator);
+        summonButton = new SummonRequestButton();
+        doorStatus = DoorStatus.CLOSED;
+    }
     
     void setDoorStatus(DoorStatus status) {
         this.doorStatus = status;
@@ -31,8 +39,9 @@ public class DoorOperator {
     }
     
     void startOperation() {
-        doorOpened();
-        doorClosed();
+        doorOpeningDevice.openDoors();
+        timer.StartTimer();
+        doorOpeningDevice.closeDoors();
     }
     
     void doorOpened() {
